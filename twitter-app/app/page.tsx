@@ -3,69 +3,27 @@ import Image from "next/image";
 import { Client, Databases, Account } from "appwrite";
 import { useEffect, useState } from "react";
 import conf from "@/conf/config";
-import { error } from "console";
+import {
+  userLogout,
+  createUser,
+  userLogin,
+  getTweets,
+  createTweets,
+} from "./components/serverActions";
+import { DocumentData } from "firebase/firestore";
+// import Tweets from "./components/Tweets";
 
-//  getting server from appwrite
-export async function getServer() {
-  const client = new Client();
-  client.setEndpoint(conf.appwriteUrl).setProject(conf.appwritePublicProject);
-  const database = new Databases(client);
-  const tweets = await database.listDocuments(
-    conf.appwriteDatabase,
-    conf.appwriteTweetCollection
-  );
-  console.log(tweets.documents);
-}
+function Home() {
+  const [user, setUser] = useState("");
+  const [tweets, setTweets] = useState<any[]>([]);
+  // const userData = userLogin;
 
-//  creating a user login from appwrite
-const createUser = async () => {
-  const client = new Client();
-  const account = new Account(client);
-  client.setEndpoint(conf.appwriteUrl).setProject(conf.appwritePublicProject);
-
-  const response = account.create(
-    "username",
-    "mssuy76g=jio=-7e6rssqx82@gmail.com",
-    "pass664525d"
-  );
-  response.then(
-    function (response) {
-      console.log(response); //success
-    },
-    function (error) {
-      console.log(error); //error
-    }
-  );
-
-  console.log(response);
-};
-//  creating a user login from appwrite
-const UserLogin = async () => {
-  const client = new Client();
-  const account = new Account(client);
-  client.setEndpoint(conf.appwriteUrl).setProject(conf.appwritePublicProject);
-
-  const response = account.createEmailSession(
-    "almussa32@gmail.com",
-    "mypassword"
-  );
-  response.then(
-    function (response) {
-      console.log(response); //success
-    },
-    function (error) {
-      console.log(error); //error
-    }
-  );
-
-  console.log(response);
-};
-//  getting loggedin user from appwrite
-
-export default async function Home() {
-  // getServer();
-  // createUser();
-  const [user, setUser] = useState(null);
+  const logTweets = () => {
+    // getTweets();
+    let data = getTweets();
+    setTweets((data) => data);
+    console.log(data);
+  };
   useEffect(() => {
     const client = new Client();
     const account = new Account(client);
@@ -75,34 +33,127 @@ export default async function Home() {
     response.then(
       function (response) {
         console.log(response); //success
-        setUser(response.email);
+        setUser(response.$id);
       },
       function (error) {
         console.log(error); //error
       }
     );
+    const clientTweet = new Client();
+    client.setEndpoint(conf.appwriteUrl).setProject(conf.appwritePublicProject);
+    const database = new Databases(client);
+    const tweet = database.listDocuments(
+      conf.appwriteDatabase,
+      conf.appwriteTweetCollection
+    );
+    let tweets = tweet.then(
+      function (response) {
+        setTweets(response.documents);
+        console.log(response); //success
+      },
+      function (error) {
+        console.log(error); //error
+      }
+    );
+  }, []);
+  useEffect(() => {
+    // const client = new Client();
+    // const account = new Account(client);
+    // client.setEndpoint(conf.appwriteUrl).setProject(conf.appwritePublicProject);
 
-    console.log(response);
-  });
+    // const response = account.get();
+    // response.then(
+    //   function (response) {
+    //     console.log(response); //success
+    //     setUser(response.$id);
+    //   },
+    //   function (error) {
+    //     console.log(error); //error
+    //   }
+    // );
+    const client = new Client();
+    client.setEndpoint(conf.appwriteUrl).setProject(conf.appwritePublicProject);
+    const database = new Databases(client);
+    const tweet = database.listDocuments(
+      conf.appwriteDatabase,
+      conf.appwriteTweetCollection
+    );
+    let tweets = tweet.then(
+      function (response) {
+        setTweets(response.documents);
+        // console.log(response); //success
+      },
+      function (error) {
+        console.log(error); //error
+      }
+    );
+  }, [tweets]);
+
+  const signUp = () => {
+    createUser();
+    let data = createUser;
+    setUser((data) => data);
+  };
+
+  const logIn = () => {
+    userLogin();
+    let data = userLogin;
+    setUser((data) => data);
+  };
+
+  const logOut = () => {
+    userLogout();
+    let data = userLogout;
+    setUser((data) => data);
+  };
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="w-full mx-auto flex justify-between">
+      <div className="w-full mx-auto flex justify-between"></div>
+      <div className="flex justify-center gap-x-3">
         <button
-          onClick={createUser}
-          className="w-[5rem] rounded-xl p-2 bg-slate-100"
+          className="bg-gray-200 rounded-lg w-fit p-[1.35rem] font-bold text-lg"
+          onClick={() => signUp()}
         >
-          Create User
+          Sign Up
         </button>
         <button
-          onClick={UserLogin}
-          className="w-[5rem] rounded-xl p-2 bg-slate-100"
+          className="bg-gray-200 rounded-lg w-fit p-[1.35rem] font-bold text-lg"
+          onClick={() => logIn()}
         >
-          Login
+          Log In
+        </button>
+        <button
+          className="bg-gray-200 rounded-lg w-fit p-[1.35rem] font-bold text-lg"
+          onClick={() => logOut()}
+        >
+          LogOut
         </button>
       </div>
-      <div className="flex justify-center">
-        <h1 className="text-2xl font-bold">Hello welcome {user}</h1>
+      {user && (
+        <h1 className="text-2xl font-bold text-gray-800">
+          Hello welcome <span className="font-bold text-blue-500">{user}</span>
+        </h1>
+      )}
+      <div>
+        <h1>TWEEETS</h1>
+        <div>
+          {tweets.map((tweet) => (
+            <div key={tweet.$id}>
+              <h3>{tweet.text}</h3>
+              <p>{tweet.$createdAt}</p>
+            </div>
+          ))}
+        </div>
+        <button
+          className="bg-gray-200 rounded-lg w-fit p-[1.35rem] font-bold text-lg"
+          onClick={() => createTweets()}
+        >
+          Tweet
+        </button>
       </div>
     </main>
   );
 }
+
+export default Home;
