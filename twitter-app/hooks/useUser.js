@@ -1,9 +1,9 @@
-import React from 'react';
-
-import { Account } from 'appwrite';
-import appwriteClient from '@/libs/appwrite';
-import { useRouter } from 'next/router';
-import { FETCH_STATUS } from '@/utils/constants';
+"use client";
+import React from "react";
+import { Account } from "appwrite";
+import appwriteClient from "@/libs/appwrite";
+import { useRouter } from "next/navigation";
+import { FETCH_STATUS } from "@/utils/constants";
 
 export default function useUser() {
   const account = new Account(appwriteClient);
@@ -31,14 +31,14 @@ export default function useUser() {
   };
 
   const logout = async () => {
-    const promise = await account.deleteSession('current');
-    setCurrentAccount(null)
-    router.push('/auth/signin')
+    const promise = await account.deleteSession("current");
+    setCurrentAccount(null);
+    router.push("/auth/signin");
   };
 
   React.useEffect(() => {
     getSession();
-  }, []);
+  }, [currentAccount]);
 
   return {
     currentAccount,

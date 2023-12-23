@@ -1,14 +1,14 @@
-import React from 'react';
-import { Databases, ID } from 'appwrite';
-
-import appwriteClient from '@/libs/appwrite';
-import useUser from '@/hooks/useUser';
+import React from "react";
+import { Databases, ID } from "appwrite";
+import conf from "@/conf/config";
+import appwriteClient from "@/libs/appwrite";
+import useUser from "@/hooks/useUser";
 
 export default function CreateTweetForm({ onTweetCreated }) {
   const { currentAccount } = useUser();
 
   const [tweetForm, setTweetForm] = React.useState({
-    text: '',
+    text: "",
   });
 
   const onChangeInput = (event) => {
@@ -25,8 +25,8 @@ export default function CreateTweetForm({ onTweetCreated }) {
       const databases = new Databases(appwriteClient);
 
       const tweet = await databases.createDocument(
-        process.env.NEXT_PUBLIC_DATABASE,
-        process.env.NEXT_PUBLIC_TWEETS_COLLECTION,
+        conf.appwriteDatabase,
+        conf.appwriteTweetCollection,
         ID.unique(),
         {
           useremail: currentAccount.email,
@@ -34,7 +34,7 @@ export default function CreateTweetForm({ onTweetCreated }) {
           text: tweetForm.text,
         }
       );
-      setTweetForm({text: ''})
+      setTweetForm({ text: "" });
       onTweetCreated(tweet);
     } catch (error) {
       console.log(error);

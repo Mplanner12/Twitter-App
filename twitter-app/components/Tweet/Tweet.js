@@ -1,9 +1,9 @@
-import React from 'react';
+import React from "react";
 
-import { Databases, Functions } from 'appwrite';
-
-import appwriteClient from '@/libs/appwrite';
-import Modal from '@/components/Modal';
+import { Databases, Functions } from "appwrite";
+import conf from "@/conf/config";
+import appwriteClient from "@/libs/appwrite";
+import Modal from "@/components/Modal";
 
 export default function Tweet({ tweet, onTweetRemoved, onLikeTweetCallback }) {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -13,8 +13,8 @@ export default function Tweet({ tweet, onTweetRemoved, onLikeTweetCallback }) {
 
     try {
       await databases.deleteDocument(
-        process.env.NEXT_PUBLIC_DATABASE,
-        process.env.NEXT_PUBLIC_TWEETS_COLLECTION,
+        conf.appwriteDatabase,
+        conf.appwriteTweetCollection,
         tweet.$id
       );
       onTweetRemoved(tweet);
@@ -27,7 +27,7 @@ export default function Tweet({ tweet, onTweetRemoved, onLikeTweetCallback }) {
     try {
       const functions = new Functions(appwriteClient);
       await functions.createExecution(
-        '63fbce83c76015587c3e',
+        "63fbce83c76015587c3e",
         JSON.stringify({
           tweetId: tweet.$id,
           likes: (tweet.likes || 0) + 1,
@@ -42,7 +42,7 @@ export default function Tweet({ tweet, onTweetRemoved, onLikeTweetCallback }) {
   return (
     <div className="p-8">
       <p className="font-medium leading-6 text-base text-white">
-        {tweet.username}{' '}
+        {tweet.username}{" "}
         <span className="text-gray-500">@{tweet.useremail}</span>
       </p>
       <p className="flex-shrink font-medium text-base text-white width-auto">

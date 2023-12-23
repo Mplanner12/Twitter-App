@@ -1,9 +1,8 @@
 import React from "react";
-
-import SideNavigation from '@/components/SideNavigation';
+import SideNavigation from "@/components/SideNavigation";
 import Spinner from "@/components/Spinner";
 import useUser from "@/hooks/useUser";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function MainLayout({ children }) {
   const { currentAccount, isLoadingAccount } = useUser();
@@ -12,7 +11,7 @@ export default function MainLayout({ children }) {
   React.useEffect(() => {
     if (!currentAccount && !isLoadingAccount) {
       // If there is no account present and we finish the get account request redirect to login
-      router.push('/auth/signin');
+      router.push("/auth/signin");
     }
   }, [currentAccount, router, isLoadingAccount]);
 
