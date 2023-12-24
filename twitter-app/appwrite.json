@@ -1,0 +1,22 @@
+{
+    "projectId": "656cdd3f79c52d625f11",
+    "projectName": "chat-app",
+    "functions": [
+        {
+            "$id": "6588316a49f64e859942",
+            "name": "likeTweetById",
+            "runtime": "node-16.0",
+            "execute": [],
+            "events": [],
+            "schedule": "",
+            "timeout": 15,
+            "enabled": true,
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "path": "functions/likeTweetById",
+            "entrypoint": "index.js"
+        }
+    ]
+}

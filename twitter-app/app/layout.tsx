@@ -18,7 +18,10 @@ export default function RootLayout({
   const { currentAccount, isLoadingAccount } = useUser();
   const router = useRouter();
   React.useEffect(() => {
-    if (!currentAccount && !isLoadingAccount) {
+    if (
+      !currentAccount &&
+      (!isLoadingAccount || isLoadingAccount === undefined)
+    ) {
       // If there is no account present and we finish the get account request redirect to login
       router.push("/auth/signin");
     }
@@ -26,15 +29,27 @@ export default function RootLayout({
 
   if (!currentAccount) {
     // While there is no account show a spinner
-    return (
-      <html>
-        <body className={inter.className}>
-          <span className="bg-black w-full min-h-screen flex items-center justify-center">
-            <Spinner />;
-          </span>
-        </body>
-      </html>
-    );
+    // return (
+    //   <html>
+    //     <body className={inter.className}>
+    //       <span className="bg-black w-full min-h-screen flex items-center justify-center">
+    //         <Spinner />;
+    //       </span>
+    //     </body>
+    //   </html>
+    // );
+    setTimeout(function () {
+      return (
+        <html>
+          <body className={inter.className}>
+            <span className="bg-black w-full min-h-screen flex items-center justify-center">
+              <Spinner />;
+            </span>
+          </body>
+        </html>
+      );
+    }, 1800);
+    router.push("/auth/signup");
   }
 
   return (

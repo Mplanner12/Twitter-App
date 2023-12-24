@@ -164,6 +164,15 @@ export default function Signin() {
                 </button>
               </div>
             </form>
+            <div className="flex justify-center bg-inherit text-md mt-4">
+              Dont have an account?
+              <Link
+                href="/auth/signup"
+                className="bg-indigo-600 flex justify-center"
+              >
+                <button>Sign up</button>
+              </Link>
+            </div>
           </div>
         </div>
       </div>

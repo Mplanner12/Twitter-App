@@ -193,7 +193,7 @@ export default function Home() {
   );
 }
 
-export async function getServerProps() {
+export async function loadTweets() {
   const databases = new Databases(appwriteClient);
 
   const tweets = await databases.listDocuments(

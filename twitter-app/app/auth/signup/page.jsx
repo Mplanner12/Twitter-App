@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 
 import classNames from "classnames";
@@ -6,6 +8,7 @@ import { Client, Account, ID } from "appwrite";
 import { useRouter } from "next/navigation";
 import appwriteClient from "@/libs/appwrite";
 import { FETCH_STATUS } from "@/utils/constants";
+import Link from "next/link";
 
 export default function SignUp() {
   const router = useRouter();
@@ -182,6 +185,15 @@ export default function SignUp() {
                 </button>
               </div>
             </form>
+            <div className="flex justify-center bg-inherit text-md mt-4">
+              Already have an account?
+              <Link
+                href="/auth/signin"
+                className="bg-indigo-600 flex justify-center"
+              >
+                <button>Sign in</button>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
