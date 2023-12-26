@@ -1,18 +1,19 @@
 "use client";
 
-import "@/styles/Home.module.css";
-import type { Metadata } from "next";
-import RootLayout from "./layout/RootLayout";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { Inter } from "next/font/google";
-import SideNavigation from "./components/SideNavigation";
-import Spinner from "./components/Spinner";
-import useUser from "./components/hooks/useUser";
+import SideNavigation from "../components/SideNavigation";
+import Spinner from "../components/Spinner";
+import useUser from "../components/hooks/useUser";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   // const { currentAccount, isLoadingAccount } = useUser();
   const { currentAccount, isLoadingAccount } = useUser();
   const router = useRouter();
@@ -26,26 +27,31 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     }
   }, [currentAccount, router, isLoadingAccount]);
 
-  // if (!currentAccount) {
-  //   // While there is no account show a spinner
-  //   return (
-  //     <html>
-  //       <body className={inter.className}>
-  //         <span className="bg-black w-full min-h-screen flex items-center justify-center">
-  //           <Spinner />;
-  //         </span>
-  //       </body>
-  //     </html>
-  //   );
-  // return (
-  //   <body className={inter.className}>
-  //     <span className="bg-black w-full min-h-screen flex items-center justify-center">
-  //       <Spinner />;
-  //     </span>
-  //   </body>
-  // );
-  // }
-  router.push("/auth/signup");
+  if (!currentAccount) {
+    // While there is no account show a spinner
+    // return (
+    //   <html>
+    //     <body className={inter.className}>
+    //       <span className="bg-black w-full min-h-screen flex items-center justify-center">
+    //         <Spinner />;
+    //       </span>
+    //     </body>
+    //   </html>
+    // );
+    setTimeout(function () {
+      return (
+        <html>
+          <body className={inter.className}>
+            <span className="bg-black w-full min-h-screen flex items-center justify-center">
+              <Spinner />;
+            </span>
+          </body>
+        </html>
+      );
+    }, 1800);
+    router.push("/auth/signup");
+  }
+
   return (
     <html>
       <body className={inter.className}>

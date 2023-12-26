@@ -1,6 +1,6 @@
 import React from "react";
 import { Client, Account, Databases } from "appwrite";
-import conf from "@/conf/config";
+import { conf } from "@/conf/config";
 
 //  creating a user signup from appwrite
 export const createUser = async () => {

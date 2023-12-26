@@ -2,13 +2,13 @@
 
 import "@/styles/Home.module.css";
 import type { Metadata } from "next";
-import RootLayout from "./layout/RootLayout";
+import RootLayout from "./RootLayout";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { Inter } from "next/font/google";
-import SideNavigation from "./components/SideNavigation";
-import Spinner from "./components/Spinner";
-import useUser from "./components/hooks/useUser";
+import SideNavigation from "../components/SideNavigation";
+import Spinner from "../components/Spinner";
+import useUser from "../components/hooks/useUser";
 
 const inter = Inter({ subsets: ["latin"] });
 

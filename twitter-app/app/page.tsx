@@ -2,7 +2,6 @@
 // import Image from "next/image";
 // import { Client, Databases, Account } from "appwrite";
 // import { useEffect, useState } from "react";
-import conf from "@/conf/config";
 // import {
 //   userLogout,
 //   createUser,
@@ -159,9 +158,10 @@ import conf from "@/conf/config";
 import React from "react";
 import { Databases } from "appwrite";
 import appwriteClient from "@/libs/appwrite";
-import Feed from "@/components/Feed";
-import RootLayout from "./layout";
+import Feed from "@/app/components/Feed";
+import Layout from "./layout";
 import { useState, useEffect } from "react";
+import { conf } from "@/conf/conf";
 import { Client } from "appwrite";
 import client from "@/libs/appwrite/appwrite";
 
@@ -187,9 +187,9 @@ export default function Home() {
   }, []);
 
   return (
-    <RootLayout>
+    <Layout>
       <Feed tweets={tweets} />
-    </RootLayout>
+    </Layout>
   );
 }
 

@@ -1,5 +1,5 @@
-import useUser from '@/hooks/useUser';
-import Link from 'next/link';
+import useUser from "../hooks/useUser";
+import Link from "next/link";
 
 export default function SideNavigation() {
   const { currentAccount, logout } = useUser();

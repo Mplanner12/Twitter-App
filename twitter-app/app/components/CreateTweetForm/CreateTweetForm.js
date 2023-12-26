@@ -1,8 +1,8 @@
 import React from "react";
 import { Databases, ID } from "appwrite";
-import conf from "@/conf/config";
+import { conf } from "@/conf/conf";
 import appwriteClient from "@/libs/appwrite";
-import useUser from "@/hooks/useUser";
+import useUser from "../hooks/useUser";
 
 export default function CreateTweetForm({ onTweetCreated }) {
   const { currentAccount } = useUser();

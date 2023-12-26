@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 
-import Tweet from '@/components/Tweet';
-import CreateTweetForm from '@/components/CreateTweetForm';
+import Tweet from "../Tweet";
+import CreateTweetForm from "../CreateTweetForm";
 
 export default function Feed({ tweets: tweetsProp }) {
   const [tweets, setTweets] = React.useState(tweetsProp);

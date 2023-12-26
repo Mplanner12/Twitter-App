@@ -2,7 +2,7 @@ import React from "react";
 
 import { Databases } from "appwrite";
 import appwriteClient from "@/libs/appwrite";
-import conf from "./conf/config";
+import { conf } from "./conf/config";
 import Feed from "@/components/Feed";
 import MainLayout from "@/components/Layouts/MainLayout";
 

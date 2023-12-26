@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Databases, Functions } from "appwrite";
-import conf from "@/conf/config";
+import { conf } from "@/conf/conf";
 import appwriteClient from "@/libs/appwrite";
 import Modal from "@/components/Modal";
 

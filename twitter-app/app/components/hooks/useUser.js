@@ -2,7 +2,7 @@
 import React from "react";
 import { Client, Account } from "appwrite";
 // import appwriteClient from "@/libs/appwrite";
-import conf from "@/conf/config";
+import { conf } from "@/conf/conf";
 import { useRouter } from "next/navigation";
 import { FETCH_STATUS } from "@/utils/constants";
 
