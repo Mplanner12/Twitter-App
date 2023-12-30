@@ -1,15 +1,16 @@
 "use client";
 import React from "react";
 import { Client, Account } from "appwrite";
-// import appwriteClient from "@/libs/appwrite";
+import appwriteClient from "@/libs/appwrite";
 import { conf } from "@/conf/conf";
 import { useRouter } from "next/navigation";
 import { FETCH_STATUS } from "@/utils/constants";
+import { useEffect } from "react";
 
 export default function useUser() {
   const client = new Client();
+  const account = new Account(appwriteClient);
   client.setEndpoint(conf.appwriteUrl).setProject(conf.appwritePublicProject);
-  const account = new Account(client);
   const [currentAccount, setCurrentAccount] = React.useState();
   const [accountStatus, setAccountStatus] = React.useState(
     FETCH_STATUS.LOADING
@@ -20,24 +21,25 @@ export default function useUser() {
     setAccountStatus(FETCH_STATUS.LOADING);
 
     let currentAccount = null;
-    const promise = account.get(client);
+    const promise = await account.get();
 
     promise
       .then((response) => {
         currentAccount = response;
         console.log(currentAccount);
+        setCurrentAccount(currentAccount);
         setAccountStatus(FETCH_STATUS.SUCCESS);
       })
       .catch((error) => {
         console.log(error);
         setAccountStatus(FETCH_STATUS.FAIL);
-      })
-      .finally(() => {
-        setCurrentAccount(currentAccount);
       });
+    // .finally(() => {
+    //   setCurrentAccount(currentAccount);
+    // });
 
     // try {
-    //   currentAccount = await promise;
+    //   currentAccount = promise;
     //   console.log(currentAccount);
     //   setAccountStatus(FETCH_STATUS.SUCCESS);
     // } catch (error) {
@@ -55,12 +57,14 @@ export default function useUser() {
     });
     await account.delete();
     setCurrentAccount(null);
-    router.push("/auth/signin");
+    useEffect(() => {
+      router.push("/auth/signin");
+    }, []);
   };
 
   React.useEffect(() => {
     getSession();
-  }, [currentAccount]);
+  }, []);
 
   return {
     currentAccount,

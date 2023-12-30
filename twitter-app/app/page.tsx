@@ -1,4 +1,3 @@
-"use client";
 // import Image from "next/image";
 // import { Client, Databases, Account } from "appwrite";
 // import { useEffect, useState } from "react";
@@ -155,15 +154,14 @@
 //   );
 // }
 
+"use client";
 import React from "react";
-import { Databases } from "appwrite";
+import { Client, Databases } from "appwrite";
 import appwriteClient from "@/libs/appwrite";
-import Feed from "@/app/components/Feed";
+import Feed from "../components/Feed";
 import Layout from "./layout";
 import { useState, useEffect } from "react";
 import { conf } from "@/conf/conf";
-import { Client } from "appwrite";
-import client from "@/libs/appwrite/appwrite";
 
 export default function Home() {
   const [tweets, setTweets] = useState<any[]>([]);
@@ -184,7 +182,7 @@ export default function Home() {
         console.log(error); //error
       }
     );
-  }, []);
+  }, [tweets]);
 
   return (
     <Layout>

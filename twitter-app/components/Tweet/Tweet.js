@@ -3,7 +3,7 @@ import React from "react";
 import { Databases, Functions } from "appwrite";
 import { conf } from "@/conf/conf";
 import appwriteClient from "@/libs/appwrite";
-import Modal from "@/components/Modal";
+import Modal from "../Modal";
 
 export default function Tweet({ tweet, onTweetRemoved, onLikeTweetCallback }) {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
